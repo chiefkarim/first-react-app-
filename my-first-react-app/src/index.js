@@ -5,13 +5,10 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-const Welcome = (props) => {
-  return <h1>Hello, {props.name}</h1>;
-};
+
 root.render(
   <React.StrictMode>
     <App />
-    <Welcome name="karim" />
   </React.StrictMode>
 );
 

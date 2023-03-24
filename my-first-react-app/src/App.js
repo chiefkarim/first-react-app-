@@ -1,44 +1,47 @@
 import logo from "./logo.svg";
 import "./App.css";
+import React, { Component } from "react";
+import { Overview } from "./components/Overview";
+import uniqid from "uniqid";
 
-const products = [
-  { title: "Cabbage", id: 1 },
-  { title: "Garlic", id: 2 },
-  { title: "Apple", id: 3 },
-];
+class App extends Component {
+  constructor() {
+    super();
+    this.state = { tasks: [] };
+    this.add = this.add.bind(this);
+    this.del = this.del.bind(this);
+  }
+  add() {
+    const task = document.querySelector("input").value;
 
-function App() {
-  const listItems = products.map((product) => {
+    this.setState({
+      tasks: this.state.tasks.concat({
+        text: task,
+        id: uniqid(),
+      }),
+      task: {
+        text: "",
+        id: uniqid(),
+      },
+    });
+  }
+  del(movieName) {
+    this.setState({
+      tasks: this.state.tasks.filter((task) => task.id !== movieName),
+    });
+  }
+  render() {
     return (
-      <li
-        key={product.id}
-        style={{
-          color: product.isFruit ? "magenta" : "darkgreen",
-        }}
-      >
-        {product.title}
-      </li>
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <input type="text" placeholder="enter name" />
+          <button onClick={this.add}>add</button>
+          <Overview tasks={this.state.tasks} del={this.del} />
+        </header>
+      </div>
     );
-  });
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-        <ul>{listItems}</ul>
-      </header>
-    </div>
-  );
+  }
 }
 
 export default App;
